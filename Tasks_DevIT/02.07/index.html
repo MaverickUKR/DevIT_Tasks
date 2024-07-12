@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Console</title>
+    <style>
+      *,
+      html {
+        font-family: "Courier New", Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      form {
+        margin-left: 25px;
+        margin-top: 25px;
+      }
+
+      input {
+        border: 1px solid black;
+      }
+
+      button {
+        padding: 0 5px;
+      }
+
+      p {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="border: 3px solid gray; min-height: 400px; position: relative">
+      <div style="box-sizing: border-box; min-width: 60%">
+        <p id="error"></p>
+        <pre id="content"></pre>
+      </div>
+      <hr />
+      <form
+        id="commandForm"
+        style="
+          margin: 5px;
+          padding: 5px;
+          justify-content: space-between;
+          display: flex;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          box-sizing: border-box;
+        "
+      >
+        <input
+          type="text"
+          id="commandInput"
+          name="command"
+          placeholder="Enter ls command"
+          required
+        />
+        <button type="submit" style="margin-right: 5px">Enter</button>
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on("connect", () => {
+        console.log("Socket.io connection is active");
+      });
+
+      socket.on("error", (error) => {
+        console.error("Socket.io error:", error);
+      });
+
+      socket.on("response", (data) => {
+        const err = document.getElementById("error");
+        const content = document.getElementById("content");
+        if (data.error) {
+          err.textContent = data.error;
+          content.textContent = "";
+        } else {
+          err.textContent = "";
+          content.textContent = data.content;
+        }
+      });
+
+      document.getElementById("commandForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const command = document.getElementById("commandInput").value;
+        socket.emit("command", { command });
+      });
+    </script>
+  </body>
+</html>

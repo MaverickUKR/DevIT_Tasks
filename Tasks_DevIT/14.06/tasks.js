@@ -117,18 +117,18 @@
 // _________________________________________
 // OBJECTS
 // TASK 1
-// function createObj(): boolean {
-//   const obj: object = Object.create(Object.prototype, {
-//     name: {
-//       value: "ubuntu",
-//       writable: true,
-//       configurable: true,
-//       enumerable: true,
-//     },
-//   });
-//   return Object.prototype.hasOwnProperty.call(obj, "name");
-// }
-// console.log(createObj()); // true
+function createObj() {
+    var obj = Object.create(Object.prototype, {
+        name: {
+            value: "ubuntu",
+            writable: true,
+            configurable: true,
+            enumerable: true,
+        },
+    });
+    return Object.prototype.hasOwnProperty.call(obj, "name");
+}
+console.log(createObj()); // true
 // TASK 2
 // function createFrozenObj(): string {
 //   "use strict";
@@ -180,12 +180,12 @@
 // }
 // console.log(defineProp()); // Object { name: "ubuntu", version: "24.04" }
 // TASK 5
-function getProp() {
-    var obj = {
-        name: "ubuntu",
-        version: "24.04",
-        type: "Linux",
-    };
-    return Object.getOwnPropertyNames(obj);
-}
-console.log(getProp()); // ["name", "version", "type"]
+// function getProp(): Array<string> {
+//   const obj: { name: string; version: string; type: string } = {
+//     name: "ubuntu",
+//     version: "24.04",
+//     type: "Linux",
+//   };
+//   return Object.getOwnPropertyNames(obj);
+// }
+// console.log(getProp()); // ["name", "version", "type"]
