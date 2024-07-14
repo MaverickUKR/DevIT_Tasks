@@ -1,141 +1,141 @@
-type Articles = Record<string, string>;
+// type Articles = Record<string, string>;
 
-type FilterOperators = Record<string, string>;
+// type FilterOperators = Record<string, string>;
 
-type Rule =
-  | { key: string; rule: string; params: [string] }
-  | { key: string; rule: "regExp"; params: [RegExp] };
+// type Rule =
+//   | { key: string; rule: string; params: [string] }
+//   | { key: string; rule: "regExp"; params: [RegExp] };
 
-type StringRuleHandler = (params: [string], value: string) => boolean;
-type RegExpRuleHandler = (params: [RegExp], value: string) => boolean;
+// type StringRuleHandler = (params: [string], value: string) => boolean;
+// type RegExpRuleHandler = (params: [RegExp], value: string) => boolean;
 
-type Handlers = { [key: string]: StringRuleHandler | RegExpRuleHandler };
+// type Handlers = { [key: string]: StringRuleHandler | RegExpRuleHandler };
 
-const articles: Articles[] = [
-  {
-    title: "justo. Praesent luctus. Curabitur",
-    text: "sapien, gravida non, sollicitudin a,",
-  },
-  {
-    title: "quam quis diam. Pellentesque",
-    text: "eu odio tristique pharetra. Quisque ac",
-  },
-  {
-    title: "quis lectus. Nullam suscipit,",
-    text: "bibendum. Donec felis orci, adipiscing non, luctus sit",
-  },
-  {
-    title: "Cras dolor dolor, tempus",
-    text: "eget magna. Suspendisse tristique neque",
-  },
-  {
-    title: "ut dolor dapibus gravida.",
-    text: "ultricies adipiscing, enim mi tempor lorem, eget mollis",
-  },
-  {
-    title: "elit. Etiam laoreet, libero",
-    text: "eget metus eu erat semper rutrum.",
-  },
-  {
-    title: "velit eu sem. Pellentesque",
-    text: "Aliquam auctor, velit eget laoreet posuere, enim nisl elementum",
-  },
-  {
-    title: "Aliquam ultrices iaculis odio.",
-    text: "ligula consectetuer rhoncus. Nullam velit dui, semper et,",
-  },
-  {
-    title: "a nunc. In at",
-    text: "semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices",
-  },
-  {
-    title: "iaculis quis, pede. Praesent",
-    text: "mi. Aliquam gravida mauris ut mi. Duis risus",
-  },
-];
-
-const FILTER_OPERATORS: FilterOperators = {
-  AND: "AND",
-  OR: "OR",
-};
-
-const textLikeRule: Rule = { key: "text", rule: "like", params: ["mollis"] };
-const titleStartLikeRule: Rule = {
-  key: "title",
-  rule: "sLike",
-  params: ["ve"],
-};
-const titleEndLikeRule: Rule = { key: "title", rule: "eLike", params: ["ur"] };
-const textRegExpRule: Rule = {
-  key: "text",
-  rule: "regExp",
-  params: [new RegExp("[e]{2}")],
-};
-
-const handlerLikeRule: StringRuleHandler = (params, value) =>
-  value.includes(params[0]);
-const handlerSLikeRule: StringRuleHandler = (params, value) =>
-  value.startsWith(params[0]);
-const handlerELikeRule: StringRuleHandler = (params, value) =>
-  value.endsWith(params[0]);
-const handlerRegExpRule: RegExpRuleHandler = (params, value) =>
-  params[0].test(value);
-
-const ruleHandlers: Handlers = {
-  like: handlerLikeRule,
-  sLike: handlerSLikeRule,
-  eLike: handlerELikeRule,
-  regExp: handlerRegExpRule,
-};
-
-const myFilter =
-  (handlers: Handlers) =>
-  (
-    items: Articles[],
-    rules: Rule[],
-    operator: string = FILTER_OPERATORS.OR
-  ): Articles[] => {
-    return items.filter((item) => {
-      const results = rules.map((rule) => {
-        const handler = handlers[rule.rule];
-        return handler(rule.params as any, item[rule.key]);
-      });
-      if (operator === FILTER_OPERATORS.AND) {
-        return results.every((result) => result);
-      } else {
-        return results.some((result) => result);
-      }
-    });
-  };
-
-console.log(
-  myFilter(ruleHandlers)(
-    articles,
-    [textLikeRule, titleEndLikeRule],
-    FILTER_OPERATORS.OR
-  )
-);
-// [
-// {"title":"justo. Praesent luctus. Curabitur","text":"sapieen, gravida non, sollicitudin a,"},
-// {"title":"ut dolor dapibus gravida.","text":"ultricies adipiscing, enim mi tempor lorem, eget mollis"},
-// {"title":"a nunc. In at","text":"semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices"}
-// ]
-
-console.log(
-  myFilter(ruleHandlers)(articles, [textRegExpRule, titleStartLikeRule])
-);
-// [{"title":"justo. Praesent luctus. Curabitur","text":"sapieen, gravida non, sollicitudin a,"},
-// {"title":"velit eu sem. Pellentesque","text":"Aliquam auctor, velit eget laoreet posuere, enim nisl elementum"}]
-
-console.log(
-  myFilter(ruleHandlers)(articles, [titleEndLikeRule], FILTER_OPERATORS.AND)
-);
-// [
+// const articles: Articles[] = [
 //   {
 //     title: "justo. Praesent luctus. Curabitur",
-//     text: "sapieen, gravida non, sollicitudin a,",
+//     text: "sapien, gravida non, sollicitudin a,",
+//   },
+//   {
+//     title: "quam quis diam. Pellentesque",
+//     text: "eu odio tristique pharetra. Quisque ac",
+//   },
+//   {
+//     title: "quis lectus. Nullam suscipit,",
+//     text: "bibendum. Donec felis orci, adipiscing non, luctus sit",
+//   },
+//   {
+//     title: "Cras dolor dolor, tempus",
+//     text: "eget magna. Suspendisse tristique neque",
+//   },
+//   {
+//     title: "ut dolor dapibus gravida.",
+//     text: "ultricies adipiscing, enim mi tempor lorem, eget mollis",
+//   },
+//   {
+//     title: "elit. Etiam laoreet, libero",
+//     text: "eget metus eu erat semper rutrum.",
+//   },
+//   {
+//     title: "velit eu sem. Pellentesque",
+//     text: "Aliquam auctor, velit eget laoreet posuere, enim nisl elementum",
+//   },
+//   {
+//     title: "Aliquam ultrices iaculis odio.",
+//     text: "ligula consectetuer rhoncus. Nullam velit dui, semper et,",
+//   },
+//   {
+//     title: "a nunc. In at",
+//     text: "semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices",
+//   },
+//   {
+//     title: "iaculis quis, pede. Praesent",
+//     text: "mi. Aliquam gravida mauris ut mi. Duis risus",
 //   },
 // ];
+
+// const FILTER_OPERATORS: FilterOperators = {
+//   AND: "AND",
+//   OR: "OR",
+// };
+
+// const textLikeRule: Rule = { key: "text", rule: "like", params: ["mollis"] };
+// const titleStartLikeRule: Rule = {
+//   key: "title",
+//   rule: "sLike",
+//   params: ["ve"],
+// };
+// const titleEndLikeRule: Rule = { key: "title", rule: "eLike", params: ["ur"] };
+// const textRegExpRule: Rule = {
+//   key: "text",
+//   rule: "regExp",
+//   params: [new RegExp("[e]{2}")],
+// };
+
+// const handlerLikeRule: StringRuleHandler = (params, value) =>
+//   value.includes(params[0]);
+// const handlerSLikeRule: StringRuleHandler = (params, value) =>
+//   value.startsWith(params[0]);
+// const handlerELikeRule: StringRuleHandler = (params, value) =>
+//   value.endsWith(params[0]);
+// const handlerRegExpRule: RegExpRuleHandler = (params, value) =>
+//   params[0].test(value);
+
+// const ruleHandlers: Handlers = {
+//   like: handlerLikeRule,
+//   sLike: handlerSLikeRule,
+//   eLike: handlerELikeRule,
+//   regExp: handlerRegExpRule,
+// };
+
+// const myFilter =
+//   (handlers: Handlers) =>
+//   (
+//     items: Articles[],
+//     rules: Rule[],
+//     operator: string = FILTER_OPERATORS.OR
+//   ): Articles[] => {
+//     return items.filter((item) => {
+//       const results = rules.map((rule) => {
+//         const handler = handlers[rule.rule];
+//         return handler(rule.params as any, item[rule.key]);
+//       });
+//       if (operator === FILTER_OPERATORS.AND) {
+//         return results.every((result) => result);
+//       } else {
+//         return results.some((result) => result);
+//       }
+//     });
+//   };
+
+// console.log(
+//   myFilter(ruleHandlers)(
+//     articles,
+//     [textLikeRule, titleEndLikeRule],
+//     FILTER_OPERATORS.OR
+//   )
+// );
+// // [
+// // {"title":"justo. Praesent luctus. Curabitur","text":"sapieen, gravida non, sollicitudin a,"},
+// // {"title":"ut dolor dapibus gravida.","text":"ultricies adipiscing, enim mi tempor lorem, eget mollis"},
+// // {"title":"a nunc. In at","text":"semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices"}
+// // ]
+
+// console.log(
+//   myFilter(ruleHandlers)(articles, [textRegExpRule, titleStartLikeRule])
+// );
+// // [{"title":"justo. Praesent luctus. Curabitur","text":"sapieen, gravida non, sollicitudin a,"},
+// // {"title":"velit eu sem. Pellentesque","text":"Aliquam auctor, velit eget laoreet posuere, enim nisl elementum"}]
+
+// console.log(
+//   myFilter(ruleHandlers)(articles, [titleEndLikeRule], FILTER_OPERATORS.AND)
+// );
+// // [
+// //   {
+// //     title: "justo. Praesent luctus. Curabitur",
+// //     text: "sapieen, gravida non, sollicitudin a,",
+// //   },
+// // ];
 
 // 2.Напишите функцию сжатия ключей коллекции объектов
 // !Для упрощения, объекты могут быть только одноуровневыми!
