@@ -1,0 +1,19 @@
+#version: '3'
+
+name: 'dc'
+
+services:
+  node:
+   #     image: app-dc-node:latest
+    build: 
+      context: ./docker/node
+      args:
+        - UID=1000
+        - GID=1000
+        - USER_NAME=volodymyr_mazepa 
+    user: 1000:1000
+    volumes:
+      - ./dc:/app
+    ports:
+      - 3000:3000
+  

@@ -1,20 +1,3 @@
-// const date = new Date();
-// const currDate = date.toLocaleString("ru-RU").replace(",", "");
-// const cookieText = document.cookie(encodeURIComponent(date));
-// document.cookie = date;
-// console.log(document.cookie);
-// console.log(date);
-// function renderCookie() {
-//   const root = document.getElementById("root");
-//   const list = document.getElementById("list");
-//   const paragraph = document.createElement("p");
-//   // root.append(paragraph);
-//   root.insertAdjacentHTML("afterend", `<p>${currDate}</p>`);
-//   // paragraph.innerHTML(date);
-//   // const appendDate = root.appendChild(`<p>${date}</p>`);
-//   console.log(paragraph);
-// }
-// renderCookie();
 function setCookie(name, value) {
   document.cookie = `${name}=${value}`;
 }
@@ -66,6 +49,7 @@ function addToLocalStorage() {
 
 function loadFromLocalStorage() {
   const list = document.getElementById("list");
+  list.innerHTML = ""; // Очищаем предыдущий вывод
   if (localStorage.length === 0) {
     const noItems = document.createElement("li");
     noItems.id = "noItems";
@@ -121,29 +105,3 @@ window.addEventListener("DOMContentLoaded", () => {
   loadFromLocalStorage();
   displayFirstVisitInfo();
 });
-// console.log(addToLocalStorage());
-// list.insertAdjacentHTML("afterend", `<li></li>`);
-// В инпут вводится имя товара (input.value),
-// которое сетится в localStorage
-
-// каждый рендер страницы, товары рендерятся как li элементы
-
-// если все работает нормально, добавляем кнопку удаления товара
-
-// в конце используя new Date, добавляем в cookie дату и время первого
-// посещения страницы и рендерим время параграфом под списком товаров
-
-// const inputValue = document.getElementById("input").value;
-// const savedText = localStorage.getItem("item");
-// const list = document.getElementById("list");
-// if (savedText) {
-//   list.insertAdjacentHTML(
-//     "afterend",
-//     `<li>${savedText} + " " + ${inputValue}</li>`
-//   );
-// } else {
-//   list.insertAdjacentHTML(
-//     "afterend",
-//     `<li>"No text found in LocalStorage."</li>`
-//   );
-// }
