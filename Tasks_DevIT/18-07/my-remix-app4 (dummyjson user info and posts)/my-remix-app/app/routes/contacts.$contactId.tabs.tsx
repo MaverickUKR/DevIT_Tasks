@@ -1,40 +1,7 @@
-// import { useLoaderData, NavLink, Outlet } from "react-router-dom";
-// import { getContact, getUserPosts } from "../data";
-
-// export async function loader({ params }) {
-//   const contact = await getContact(params.contactId);
-//   const posts = await getUserPosts(params.contactId);
-//   return { contact, posts };
-// }
-
-// export default function ContactTabs() {
-//   const { contact, posts } = useLoaderData();
-
-//   return (
-//     <div>
-//       <h1>
-//         {contact.first} {contact.last}
-//       </h1>
-//       <nav>
-//         <ul>
-//           <li>
-//             <NavLink to="info" end>
-//               Инфо
-//             </NavLink>
-//           </li>
-//           <li>
-//             <NavLink to="posts">Посты</NavLink>
-//           </li>
-//         </ul>
-//       </nav>
-//       <Outlet context={{ contact, posts }} />
-//     </div>
-//   );
-// }
 import { useLoaderData } from "@remix-run/react";
 import { json, LoaderFunction } from "@remix-run/node";
 import { getContact, getUserPosts } from "~/data";
-import type { Contact, Post } from "./types"; // Предположим, что типы определены в отдельном файле
+import type { Contact, Post } from "./types";
 
 interface LoaderData {
   contact: Contact;
@@ -52,7 +19,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function ContactTabs() {
   const { contact, posts } = useLoaderData<LoaderData>();
-
   return (
     <div>
       <h1>

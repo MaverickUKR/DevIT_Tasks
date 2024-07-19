@@ -115,7 +115,7 @@ export async function updateUserList() {
   }
 }
 
-// Функция для получения постов пользователя
+// Получения постов пользователя
 export async function getUserPosts(userId: string) {
   try {
     const response = await fetch(`https://dummyjson.com/posts/user/${userId}`);
@@ -127,7 +127,6 @@ export async function getUserPosts(userId: string) {
   }
 }
 
-// Инициализация данных пользователей при загрузке модуля
 updateUserList().catch((error) =>
   console.error("Ошибка при обновлении списка пользователей:", error)
 );
