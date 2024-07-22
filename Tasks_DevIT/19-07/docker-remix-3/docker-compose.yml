@@ -1,0 +1,70 @@
+# name: 'dremix1'
+
+# services:
+#   remix:
+#     #    image: app-dremix1-node:latest
+#     build:
+#       context: ./docker/node
+#       args:
+#         - UID=1000
+#         - GID=1000
+#         - USER_NAME=dev
+#     user: 1000:1000
+#     volumes:
+#       - ./source:/app
+#     ports:
+#       - 3000:3000
+#     command:
+#       - npm
+#       - run
+#       - dev
+
+name: 'dremix3'
+
+volumes:
+  db-data:
+
+services:
+  remix:
+    # image: app-dc-node:latest
+    build: 
+      context: ./docker/node
+      args:
+        - UID=1000
+        - GID=1000
+        - USER_NAME=volodymyr_mazepa 
+    user: 1000:1000
+    volumes:
+      - ./source:/app
+    ports:
+      - 3002:3000
+    command:
+      - npm
+      - run
+      - dev
+    environment:
+      DATABASE_URL: postgres://postgres:123456@db:5432/postgres
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+  pgadmin: 
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    ports:
+      - 30081:80
+    depends_on:
+      - db

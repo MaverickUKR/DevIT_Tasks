@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getUserPosts } from "~/data";
+import { getUserPosts } from "../data";
 import type { LoaderFunction } from "@remix-run/node";
 import type { Post } from "./types";
 
