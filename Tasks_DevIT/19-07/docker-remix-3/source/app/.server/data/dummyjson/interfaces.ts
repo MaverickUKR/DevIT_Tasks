@@ -1,10 +1,10 @@
-export type DummyUserAddress = {
+export type TUserAddress = {
   country: string;
   city: string;
   address: string;
 };
 
-export type DummyUser = {
+export type TDummyUser = {
   id: number;
   firstName: string;
   lastName: string;
@@ -12,10 +12,11 @@ export type DummyUser = {
   image: string;
   email: string;
   favorite: boolean;
-  address: DummyUserAddress;
+  address: TUserAddress;
+  password: string;
 };
 
-export type DummyPost = {
+export type TDummyPost = {
   id: number;
   title: string;
   body: string;
@@ -26,45 +27,3 @@ export type DummyPost = {
     dislikes: number;
   };
 };
-
-// export type DummyUserAddress = {
-//   country: string;
-//   city: string;
-//   address: string;
-// };
-
-// export type DummyUser = {
-//   id: number;
-//   email: string;
-//   firstName: string;
-//   lastName: string;
-//   age: number;
-//   image: string;
-//   password: string;
-//   favorite: boolean;
-//   address: DummyUserAddress;
-//   profile?: {
-//     id: number;
-//     firstName: string;
-//     lastName: string;
-//     userId: number;
-//   } | null;
-//   posts?: {
-//     id: number;
-//     title: string;
-//     body: string;
-//     userId: number;
-//   }[];
-// };
-
-// export type DummyPost = {
-//   id: number;
-//   title: string;
-//   body: string;
-//   userId: number;
-//   tags: string[];
-//   reactions: {
-//     likes: number;
-//     dislikes: number;
-//   };
-// };

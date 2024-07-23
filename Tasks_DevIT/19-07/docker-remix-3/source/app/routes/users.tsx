@@ -9,7 +9,6 @@ import {
 import { useEffect } from "react";
 import { usersLoader } from "../.server/loaders/users.loader";
 import { usersCreateEmptyUserAction } from "../.server/actions/users.create.empty.user.action";
-import type { DummyUser } from "../.server/data/dummyjson/interfaces";
 
 export const action = usersCreateEmptyUserAction;
 
@@ -59,15 +58,19 @@ export default function Users() {
         </div>
 
         <ul className={`space-y-2 ${searching ? "text-gray-500" : ""}`}>
-          {users.map((user: DummyUser) => (
-            <li key={user.id}>
-              <NavLink to={`/users/${user.id}/info`}>
-                <div>
-                  {user.firstName} {user.lastName}
-                </div>
-              </NavLink>
-            </li>
-          ))}
+          {users.length > 0 ? (
+            users.map((user) => (
+              <li key={user.id}>
+                <NavLink to={`/users/${user.id}/info`}>
+                  <div>
+                    {user.firstName} {user.lastName}
+                  </div>
+                </NavLink>
+              </li>
+            ))
+          ) : (
+            <li>No users found</li>
+          )}
         </ul>
       </aside>
 

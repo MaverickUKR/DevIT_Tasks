@@ -18,7 +18,7 @@ export default function EditUser() {
         <span>Name</span>
         <input
           defaultValue={user.firstName}
-          name="firstNane"
+          name="firstName"
           type="text"
           placeholder="First name"
         />
@@ -39,7 +39,7 @@ export default function EditUser() {
         <span>Avatar URL</span>
         <input
           defaultValue={user.image}
-          name="avatar"
+          name="image"
           placeholder="https://example.com/avatar.jpg"
           type="text"
         />
