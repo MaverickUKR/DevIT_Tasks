@@ -1,34 +1,10 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import {
-  ADMIN_AUTH_STRATEGY,
-  authenticator,
-} from "../.server/services/auth.service";
-import { ActionFunctionArgs, json, LoaderFunctionArgs } from "@remix-run/node";
-import { commitSession, getSession } from "../.server/utils/session.util";
+import { adminAuthLoader } from "../.server/admin/loaders/auth.login.loader";
+import { adminAuthLoginAction } from "../.server/admin/actions/auth.login.action";
 
-export async function action({ request }: ActionFunctionArgs) {
-  return await authenticator.authenticate(ADMIN_AUTH_STRATEGY, request, {
-    successRedirect: "/admin/dashboard",
-    failureRedirect: "/admin/auth/login",
-  });
-}
+export const action = adminAuthLoginAction;
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  await authenticator.isAuthenticated(request, {
-    successRedirect: "/admin/dashboard",
-  });
-
-  let session = await getSession(request.headers.get("cookie"));
-  let error = session.get(authenticator.sessionErrorKey);
-  return json(
-    { error },
-    {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    }
-  );
-}
+export const loader = adminAuthLoader;
 
 export default function Index() {
   const data = useLoaderData<typeof loader>();

@@ -3,8 +3,8 @@ import { Authenticator } from "remix-auth";
 import { FormStrategy } from "remix-auth-form";
 import { sessionStorage } from "../utils/session.util";
 import { invariant } from "@remix-run/router/history";
-import { comparePassword } from "../utils/auth.util";
-import { prisma } from "../utils/prisma.util";
+import { comparePassword } from "../../shared/utils/auth.util";
+import { prisma } from "../../shared/utils/prisma.util";
 
 export const ADMIN_AUTH_STRATEGY = "admin-pass";
 
@@ -19,8 +19,8 @@ const findUser = async (email: string, password: string): Promise<User> => {
 
 authenticator.use(
   new FormStrategy(async ({ form }) => {
-    let email = form.get("email");
-    let password = form.get("password");
+    const email = form.get("email");
+    const password = form.get("password");
 
     // You can validate the inputs however you want
     invariant(typeof email === "string", "email must be a string");

@@ -1,7 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 import { $Enums } from "@prisma/client";
-import { environment } from "../../app/.server/constants/environment.constants";
-import { hashPassword } from "../../app/.server/utils/auth.util";
+import { environment } from "../../app/.server/shared/constants/environment.constant";
+import { hashPassword } from "../../app/.server/shared/utils/auth.util";
 
 export const createDefaultAdmin = async (prisma: PrismaClient) => {
   console.log("Seeding default admin");
