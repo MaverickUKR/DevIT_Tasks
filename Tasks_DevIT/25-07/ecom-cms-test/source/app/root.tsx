@@ -1,4 +1,5 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
@@ -7,6 +8,12 @@ import {
 } from "@remix-run/react";
 // import "./tailwind.css";
 // import '@shopify/polaris/build/esm/styles.css';
+
+export const loader = () => {
+  return json({
+    layer: "root",
+  });
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

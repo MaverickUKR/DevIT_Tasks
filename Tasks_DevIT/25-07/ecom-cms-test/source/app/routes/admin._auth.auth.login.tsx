@@ -1,25 +1,29 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
 import { adminAuthLoader } from "../.server/admin/loaders/auth.login.loader";
 import { adminAuthLoginAction } from "../.server/admin/actions/auth.login.action";
-import {
-  Button,
-  Card,
-  FormLayout,
-  TextField,
-  Text,
-  Box,
-  Banner,
-} from "@shopify/polaris";
-import { useState } from "react";
+import { Card, FormLayout, Text, Box, Banner } from "@shopify/polaris";
+import { withZod } from "@rvf/zod";
+import { z } from "zod";
+import { ValidatedForm } from "remix-validated-form";
+import { ValidatedTextField } from "../admin/ui/ValidatedTextField/ValidatedTextField";
+import { ValidatedSubmitButton } from "../admin/ui/ValidatedSubmitButton/ValidatedSubmitButton";
 
 export const action = adminAuthLoginAction;
 
 export const loader = adminAuthLoader;
 
+export const validator = withZod(
+  z.object({
+    email: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .email("Must be a valid email"),
+    password: z.string().min(1, { message: "password must not be empty" }),
+  })
+);
 export default function Index() {
-  const data = useLoaderData<typeof loader>();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const actionData = useActionData<typeof action>();
+  // const data = useLoaderData<typeof loader>();
 
   return (
     <Card>
@@ -27,35 +31,31 @@ export default function Index() {
         Admin CMS
       </Text>
 
-      {data.error && (
+      {actionData?.error && (
         <Box paddingBlockStart="200">
           <Banner tone="warning">
-            <p>{data.error?.message}</p>
+            <p>{actionData.error?.message}</p>
           </Banner>
         </Box>
       )}
       <Box paddingBlockStart="200">
-        <Form method="post">
+        <ValidatedForm validator={validator} method="post">
           <FormLayout>
-            <TextField
+            <ValidatedTextField
               label="Email"
               type="email"
               name="email"
               autoComplete="email"
-              value={email}
-              onChange={setEmail}
             />
-            <TextField
+            <ValidatedTextField
               label="Password"
               type="password"
               name="password"
               autoComplete="on"
-              value={password}
-              onChange={setPassword}
             />
-            <Button submit={true}>Sign in</Button>
+            <ValidatedSubmitButton text="Submit" />
           </FormLayout>
-        </Form>
+        </ValidatedForm>
       </Box>
     </Card>
   );

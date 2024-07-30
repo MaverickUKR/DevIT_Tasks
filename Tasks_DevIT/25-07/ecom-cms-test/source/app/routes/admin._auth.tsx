@@ -1,5 +1,11 @@
 import { Page, Layout } from "@shopify/polaris";
-import { Outlet } from "@remix-run/react";
+import { json, Outlet } from "@remix-run/react";
+
+export const loader = () => {
+  return json({
+    layer: "auth",
+  });
+};
 
 export default function adminAuth() {
   return (
