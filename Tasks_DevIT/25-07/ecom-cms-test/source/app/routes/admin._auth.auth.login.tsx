@@ -23,7 +23,6 @@ export const validator = withZod(
 );
 export default function Index() {
   const actionData = useActionData<typeof action>();
-  // const data = useLoaderData<typeof loader>();
 
   return (
     <Card>

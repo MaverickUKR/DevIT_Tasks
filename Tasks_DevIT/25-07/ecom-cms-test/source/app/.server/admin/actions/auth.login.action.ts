@@ -2,6 +2,8 @@ import { EAdminNavigation } from "../constants/navigation.constant";
 import { AuthorizationError } from "remix-auth";
 import { ADMIN_AUTH_STRATEGY, authenticator } from "../services/auth.service";
 import { ActionFunctionArgs, json } from "@remix-run/node";
+import { validationError } from "remix-validated-form";
+import { ValidatorErrorWrapper } from "../../shared/errors/validator-error-wrapper";
 
 export async function adminAuthLoginAction({ request }: ActionFunctionArgs) {
   try {
@@ -16,13 +18,26 @@ export async function adminAuthLoginAction({ request }: ActionFunctionArgs) {
       return error;
     }
     if (error instanceof AuthorizationError) {
-      //
+      if (error.cause instanceof ValidatorErrorWrapper) {
+        return validationError(error.cause.validatorError);
+      }
+
+      // if (isJSON(error.message)) {
+      //   console.log("isJSON");
+      //   const validatorError = JSON.parse(error.message);
+      //   console.log(validatorError);
+      //   if (isValidatorError(validatorError)) {
+      //     return validationError(validatorError);
+      //   }
+      // }
+
       return json({
         error: {
           message: error.message,
         },
       });
     }
+
     return json({
       error: {
         message: "Unknown error",
